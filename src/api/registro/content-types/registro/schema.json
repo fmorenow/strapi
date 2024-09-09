@@ -28,6 +28,12 @@
     },
     "email": {
       "type": "email"
+    },
+    "retosjugadores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::retosjugador.retosjugador",
+      "mappedBy": "jugador"
     }
   }
 }

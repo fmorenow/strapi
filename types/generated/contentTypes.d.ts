@@ -362,65 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiRegistroRegistro extends Schema.CollectionType {
-  collectionName: 'registros';
-  info: {
-    singularName: 'registro';
-    pluralName: 'registros';
-    displayName: 'registros';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    nombre: Attribute.String;
-    apellido: Attribute.String;
-    celular: Attribute.String;
-    especialidad: Attribute.String;
-    empresa: Attribute.String;
-    email: Attribute.Email;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::registro.registro',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::registro.registro',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiRetoReto extends Schema.CollectionType {
-  collectionName: 'retos';
-  info: {
-    singularName: 'reto';
-    pluralName: 'retos';
-    displayName: 'retos';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    nombre: Attribute.String;
-    instrucciones: Attribute.Blocks;
-    pista: Attribute.Blocks;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::reto.reto', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::reto.reto', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -847,6 +788,116 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiRegistroRegistro extends Schema.CollectionType {
+  collectionName: 'registros';
+  info: {
+    singularName: 'registro';
+    pluralName: 'registros';
+    displayName: 'registros';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    apellido: Attribute.String;
+    celular: Attribute.String;
+    especialidad: Attribute.String;
+    empresa: Attribute.String;
+    email: Attribute.Email;
+    retosjugadores: Attribute.Relation<
+      'api::registro.registro',
+      'manyToMany',
+      'api::retosjugador.retosjugador'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::registro.registro',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::registro.registro',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRetoReto extends Schema.CollectionType {
+  collectionName: 'retos';
+  info: {
+    singularName: 'reto';
+    pluralName: 'retos';
+    displayName: 'retos';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    instrucciones: Attribute.Blocks;
+    pista: Attribute.Blocks;
+    retosjugadores: Attribute.Relation<
+      'api::reto.reto',
+      'manyToMany',
+      'api::retosjugador.retosjugador'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::reto.reto', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::reto.reto', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRetosjugadorRetosjugador extends Schema.CollectionType {
+  collectionName: 'retosjugadores';
+  info: {
+    singularName: 'retosjugador';
+    pluralName: 'retosjugadores';
+    displayName: 'retosjugadores';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    jugador: Attribute.Relation<
+      'api::retosjugador.retosjugador',
+      'manyToMany',
+      'api::registro.registro'
+    >;
+    retos: Attribute.Relation<
+      'api::retosjugador.retosjugador',
+      'manyToMany',
+      'api::reto.reto'
+    >;
+    completado: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::retosjugador.retosjugador',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::retosjugador.retosjugador',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -857,8 +908,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::registro.registro': ApiRegistroRegistro;
-      'api::reto.reto': ApiRetoReto;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -867,6 +916,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::registro.registro': ApiRegistroRegistro;
+      'api::reto.reto': ApiRetoReto;
+      'api::retosjugador.retosjugador': ApiRetosjugadorRetosjugador;
     }
   }
 }

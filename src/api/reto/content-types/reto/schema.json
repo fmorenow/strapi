@@ -19,6 +19,12 @@
     },
     "pista": {
       "type": "blocks"
+    },
+    "retosjugadores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::retosjugador.retosjugador",
+      "mappedBy": "retos"
     }
   }
 }

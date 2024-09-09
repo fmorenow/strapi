@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "retosjugadores",
+  "info": {
+    "singularName": "retosjugador",
+    "pluralName": "retosjugadores",
+    "displayName": "retosjugadores",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jugador": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::registro.registro",
+      "inversedBy": "retosjugadores"
+    },
+    "retos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::reto.reto",
+      "inversedBy": "retosjugadores"
+    },
+    "completado": {
+      "type": "boolean"
+    }
+  }
+}
