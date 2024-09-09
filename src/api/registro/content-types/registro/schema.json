@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "registros",
+  "info": {
+    "singularName": "registro",
+    "pluralName": "registros",
+    "displayName": "registros"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "apellido": {
+      "type": "string"
+    },
+    "celular": {
+      "type": "string"
+    },
+    "especialidad": {
+      "type": "string"
+    },
+    "empresa": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    }
+  }
+}
